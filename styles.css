@@ -1,0 +1,11 @@
+.hasError {
+    color: red;
+}
+.pretty-item {
+    border: red;
+    color: red;
+}
+
+.center {
+    text-align: center;
+}
