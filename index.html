@@ -1,36 +1,58 @@
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href= "styles.css">
-        <title>Google Book Search</title>
-    </head>
-    <body>
-        
-        <div>
-            <form>
-                <fieldset class="border">
-                    <legend class = "w-auto">Google Book Search</legend>
-                    <div>
-                        <label for="txtSearch" class="col-sm-1 col-form-label">
-                            keyword:
-                        </label>
-                        <div class= "col-sm-5 col-lg-4">
-                            <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="keyword...">
-                            <button type = "button" class="btn btn-primary" onclick="searchGoogleBooks()">Search</button>
-                            <button type = "reset" class="btn btn-secondary">reset</button>
-                            
-                        </div>
-                    </div>
-                    <div id="mainDiv" class =""></div>
-                </fieldset>
-            </form>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="crossorigin="anonymous"></script>
-        <script src="script.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.0/umd/popper.min.js" integrity="sha512-uxtUCZ+gIIpqJVZe/0IgmHq5yqW+2gzo3zsSqRXSlUBEM2IYxxnuyg7+i7j9SCv1R74/Zixdx0v8OiyShPWbkQ==" crossorigin="anonymous"></script>
 
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>Google Book Search</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <form @submit.prevent="searchGoogleBooks">
+            <fieldset class="border">
+                <legend class="w-auto">Google Book Search</legend>
+                <div class="row form-group">
+                    <label for="txtSearch" class="col-sm-1 col-form-label">
+                        keyword:
+                    </label>
+                    <div class="col-sm-5 col-lg-4">
+                        <input type="text" id="txtSearch" name="txtSearch" class="form-control" placeholder="keyword..."
+                            v-model="keyword">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button type="reset" class="btn btn-secondary">reset</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <div id="mainDiv">
+            <div class = "row col-sm-5" v-if="result !=null">found {{ (result !=null)?result.totalItems:''}}</div>
+            <div class="row">
+                <book-display v-if="result != null" v-for="(book, index) in result.items" :key="book.id" :book="JSON.stringify(book)">
+                </book-display>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <!--<script src="script.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.0/umd/popper.min.js"
+        integrity="sha512-uxtUCZ+gIIpqJVZe/0IgmHq5yqW+2gzo3zsSqRXSlUBEM2IYxxnuyg7+i7j9SCv1R74/Zixdx0v8OiyShPWbkQ=="
+        crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+    <script src="components/bookDisplay.js"></script>
+    <script>
+        const mountedApp = app.mount("#app")
+    </script>
+</body>
+
 </html>
